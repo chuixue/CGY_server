@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <mysql>
+    	<dbhost>cins.swpu.edu.cn</dbhost>
+        <dbuser>root</dbuser>
+        <dbpasswd>cins_b511</dbpasswd>
+        <dbname>caigengyao</dbname>
+    </mysql>
+    
+    <table tbName="user" cnName="客户表">
+    	<column cnName="微信id" colName="uopenid" type="varchar" length="64" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="用户id" colName="uid" type="int" length="8" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="姓名" colName="uname" type="varchar" length="16" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="性别" colName="usex" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="年龄" colName="uage" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="电话" colName="utel" type="varchar" length="16" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="就餐次数" colName="ucmeal" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="付款次数" colName="ucpay" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="累计消费" colName="uconsume" type="double" length="8,2" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="积分" colName="uscore" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="账户余额" colName="umoney" type="double" length="8,2" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="活跃度" colName="uactivity" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="注册时间" colName="utime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+	   	<column cnName="备注" colName="umark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="card" cnName="优惠券表">
+    	<column cnName="红包id" colName="cid" type="int" length="8" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="用户id" colName="uid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="金额" colName="cmoney" type="double" length="8,2" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="状态" colName="cstate" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+    	<column cnName="使用要求" colName="crequire" type="double" length="8,2" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="发放时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="到期时间" colName="cdeadline" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作人员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="book" cnName="预订表">
+    	<column cnName="id" colName="bid" type="int" length="8" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="用户id" colName="uid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="预约时间" colName="bbtime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="人数" colName="bcount" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="状态" colName="bstate" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="桌号" colName="tid" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="备注" colName="bmark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="时间" colName="btime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作人员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="tableinfo" cnName="餐桌信息表">
+    	<column cnName="餐桌编号" colName="tid" type="int" length="4" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="容纳人数" colName="tcount" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="房间号" colName="trid" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="类型" colName="tstyle" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+		<column cnName="备注" colName="tmark" type="varchar" length="16" primary="" increment="" default="" null="" charset="" />
+		<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作人员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="orderinfo" cnName="订单表">
+    	<column cnName="订单编号" colName="oid" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
+    	<column cnName="菜品id" colName="did" type="int" length="4" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="用户id" colName="uid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="唯一标示" colName="onlykey" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="状态" colName="ostate" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+    	<column cnName="是否代点" colName="ohelp" type="int" length="4" primary="" increment="" default="0" null="" charset="" />
+    	<column cnName="备注" colName="omark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="点餐时间" colName="obtime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="上餐时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作人员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="changetable" cnName="餐桌变更表">
+    	<column cnName="编号" colName="cid" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
+    	<column cnName="源标示" colName="cskey" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="终标示" colName="cekey" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="备注" colName="cmark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="worker" cnName="工作人员表">
+    	<column cnName="编号" colName="wid" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
+    	<column cnName="姓名" colName="wname" type="varchar" length="16" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="系统权限" colName="wpower" type="int" length="4" primary="" increment="" default="0" null="0" charset="" />
+    	<column cnName="级别" colName="wlevel" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="职务" colName="wduty" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="部门" colName="wunit" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="入职时间" colName="wtime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="dish" cnName="菜品表">
+    	<column cnName="菜品id" colName="did" type="int" length="4" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="名称" colName="dname" type="varchar" length="16" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="介绍" colName="ddescribe" type="varchar" length="128" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="销量" colName="dcount" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="类别" colName="dstyle" type="int" length="16" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="图片" colName="dimage" type="varchar" length="64" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="状态" colName="dstate" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="负责人员" colName="wid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="canceldish" cnName="取消菜品表">
+    	<column cnName="订单编号" colName="oid" type="int" length="8" primary="1" increment="" default="" null="0" charset="" />
+    	<column cnName="状态" colName="ostate" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+    	<column cnName="申请时间" colName="obtime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+    <table tbName="dishclass" cnName="菜品分类映射表">
+    	<column cnName="分类编号" colName="did" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
+    	<column cnName="分类描述" colName="ddescribe" type="varchar" length="16" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="备注" colName="omark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    </table>
+    
+	<table tbName="paybill" cnName="结算表">
+    	<column cnName="唯一标示" colName="onlykey" type="int" length="8" primary="1" increment="" default="" null="0" charset="" />
+		<column cnName="桌号" colName="tid" type="int" length="4" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="状态" colName="pstate" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+		<column cnName="到店时间" colName="ptime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="结算时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+		<column cnName="上菜情况" colName="pdish" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="应付金额" colName="pall" type="double" length="8,2" primary="" increment="" default="0.0" null="" charset="" />
+    	<column cnName="实付金额" colName="pmreal" type="double" length="8,2" primary="" increment="" default="0.0" null="" charset="" />
+		<column cnName="优惠金额" colName="pmcard" type="double" length="8,2" primary="" increment="" default="0.0" null="" charset="" />		
+    	<column cnName="操作员" colName="opid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    </table>
+	
+</database>
+
+
+
+
+

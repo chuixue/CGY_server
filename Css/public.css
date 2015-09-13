@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+
+.halfW{ width:50%; min-width:20px}
+.halfH{ height:50%}
+.allW{ width:100%}
+.floatL{ float:left}
+.floatR{ float:right}
+.clear{ clear:both;}
+.center{ text-align:center}
+.btn{ width:80px;margin-top:10px; height:25px}
+.right{ text-align:right }
+.left{ text-align:left }
+.pointer{ cursor:pointer}
+.w3{ width:30% }
+.w7{ width:70% }
+.w9{ width:90% }
+
+
+.pdTop{ padding-top:9px; padding-left:10px}
+.pdLeft{ padding-left:0px}
+.hide{ display:none; }
