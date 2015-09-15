@@ -193,7 +193,7 @@ io.sockets.on('connection', function (socket){
 		var shopId=data.shopId;
 		var uid=data.uid;			//人员
 		if(!onlykey || !uid || !shopId)return;
-		var newData={ workID:1, onlykey:onlykey, uid:uid, shopId:shopId };
+		var newData={ workID:3, onlykey:onlykey, uid:uid, shopId:shopId };
 		send(newData);
 		cout(uid + "呼叫服务！");
 		
@@ -211,6 +211,7 @@ io.sockets.on('connection', function (socket){
 		var groupKey="group" + shopId.toString() + "d" + did.toString();
 		
 		var newData={ id:id, uid:uid, state:1  };
+		cout("呼叫回执:" + uid);out(newData);
 		sendPerson(groupKey,uid,newData);
 	});
 

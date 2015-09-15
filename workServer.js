@@ -89,14 +89,16 @@ function Work3(data)
 	var uid=data.uid;
 	var shopId=data.shopId;
 	var onlykey=data.onlykey;
-	var rst=Func.partOnlykey(onlykey);
-	if(!rst){cout("bad onlykey");return;}
-	var did=rst.did;			//桌号
+	if(!onlykey || !uid || !shopId)return;
+	
 	var sql="insert into callinfo (uid, onlykey, sid, cstate, cbtime) VALUES";
 	sql += Func.fStrs([uid, [onlykey], shopId, 1, "date" ]);
 	db.Query(sql,function(err,rst,index){
-		out(rst);
-		cout(index);
+		var id=rst[index].inertId;
+		cout("呼叫编号: " + id);
+		data["id"]=id;
+		data["state"]=1;
+		socket.emit("callInfo", data);
 	});
 }
 
