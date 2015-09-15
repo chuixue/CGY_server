@@ -750,14 +750,24 @@ http.createServer(function (request, response) {
         
       }
       else if(key=="/search"){
+    	  var data=[];
     	  var shopId=params.query.shopId;
     	  var key=params.query.key;
     	  if(shopId && key){
     		  var sql="select * from dish where sid=" + shopId + "";
 	    	  getData(sql,function(txt){
 	    		  var rst=JSON.parse(txt);
-	    		  
-	    		  response.end(params.query.callback+'(' + txt + ')');
+	    		  var list=new Array();
+	    		  for(var i=0;i<rst.length;i++){
+	    			  list.push(rst[i].dname);
+	    		  }
+	    		  var lsSM=Func.getSearchByList(key,list);
+	    		  for(var i=0;i<lsSM.length;i++){
+	    			  var index=lsSM[i].index;
+	    			  data[i]={id:rst[index].did, name:rst[index].dname, describe:rst[index].ddescribe, keys:lsSM[i].keys,
+	    	 			          price:rst[index].dprice, img:rst[index].dimage,saleCount:rst[index].dcount,reduce:rst[index].dreduce};
+	    		  }
+	    		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
 	    		  cout("request: " + sql + " ,return: " + txt );
 	    	  });
     	  }
