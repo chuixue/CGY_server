@@ -190,7 +190,7 @@
     	<column cnName="操作时间" colName="optime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
     	<column cnName="商家" colName="sid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
     </table>
-    <table tbName="callInfo" cnName="呼叫表">
+    <table tbName="callinfo" cnName="呼叫表">
     	<column cnName="编号" colName="cid" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
     	<column cnName="用户id" colName="uid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
     	<column cnName="唯一标示" colName="onlykey" type="varchar" length="16" primary="" increment="" default="" null="0" charset="" />

@@ -26,7 +26,8 @@ socket.on('conn', function (data,fn) {
 	   cout("已接收事务：");
 	   out(newData);
 	   if(newData.workID==1)Work1(newData);
-	    
+	   else if(newData.workID==2)Work2(newData);
+	   else if(newData.workID==3)Work3(newData);
 	});
 });
 
@@ -78,10 +79,28 @@ function Work2(data)
 			if(rstData.length!=0)help=1;
 			sql="INSERT INTO actioninfo (did, uid, onlykey, acount, ahelp, astyle, abtime,sid) VALUES ";
 			sql+="("+ dish + "," + uid + ",'" + onlykey + "'," + num + ","+ help + ",1,'" + Func.date() + "',"+ shopId +")";
-			db.Query(sql,function(err,rst){});
+			db.Query(sql,function(err,rst){ });
 		}
 	});
 }
+//呼叫记录
+function Work3(data)
+{
+	var uid=data.uid;
+	var shopId=data.shopId;
+	var onlykey=data.onlykey;
+	var rst=Func.partOnlykey(onlykey);
+	if(!rst){cout("bad onlykey");return;}
+	var did=rst.did;			//桌号
+	var sql="insert into callinfo (uid, onlykey, sid, cstate, cbtime) VALUES";
+	sql += Func.fStrs([uid, [onlykey], shopId, 1, "date" ]);
+	db.Query(sql,function(err,rst,index){
+		out(rst);
+		cout(index);
+	});
+}
+
+
 //监听关闭
 socket.on('close', function(){
     cout('Connetion Closed.');

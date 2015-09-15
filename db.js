@@ -24,7 +24,7 @@ for(var i=0;i<cfg.tbList.length;i++)
 {
 	
 	var sql=cfg.tbList[i].GetSql();
-	if(cfg.tbList[i].tbName!="actioninfo")continue;
+	if(cfg.tbList[i].tbName!="callinfo")continue;
 	//db.Query(sql);
 }
 

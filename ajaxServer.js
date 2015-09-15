@@ -778,21 +778,16 @@ http.createServer(function (request, response) {
     	  var onlykey=params.query.onlykey;
     	  var uid=params.query.uid;
     	  if(shopId && onlykey && uid){
-    		  var sql="select * from callInfo where sid=" + shopId +" and onlykey='" + onlykey + "'' and uid=" + uid + " order by cbtime limit 5";
+    		  var sql="select * from callInfo where sid=" + shopId +" and onlykey='" + onlykey + "' and uid=" + uid + " order by cbtime limit 5";
     		  getData(sql,function(txt){
 	    		  var rst=JSON.parse(txt);
 	    		  for(var i=0;i<rst.length;i++){
-	    			  data[i]={ state:rst[i].cstate, time:rst[i].cbtime };
+	    			  data[i]={ id:rst[i].cid, state:rst[i].cstate, time:rst[i].cbtime };
 	    		  }
 	    		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
 	    		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
     		  });
-    		  
-    	  }else{
-    		  cout("error");
     	  }
-    		  
-
       }    
       else if(key=="/****"){
         	

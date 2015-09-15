@@ -104,6 +104,18 @@ io.sockets.on('connection', function (socket){
 		if(users.length==0)delete users;
 		delete userList[socketID];
 	}
+	//单人发送
+	function sendPerson(groupKey,uid,data){
+		var users=group[groupKey];
+		if(!users)return;
+		for(var i=0;i<users.length;i++){
+			var U=userList[users[i]];
+			if(!U)continue;
+			if(U.uid!=uid)continue;
+			var socket=U.socket;
+			socket.emit("update",data);
+		}
+	}
 	//***************************************************************
 	
 	socket.on('test', function(){
@@ -174,7 +186,33 @@ io.sockets.on('connection', function (socket){
 		sendGroup(groupKey, data);
 	});
 	
-
+	//接收呼叫
+	socket.on('callServer', function (data) {
+		//验证key
+		var onlykey=data.onlykey;
+		var shopId=data.shopId;
+		var uid=data.uid;			//人员
+		if(!onlykey || !uid || !shopId)return;
+		var newData={ workID:1, onlykey:onlykey, uid:uid, shopId:shopId };
+		send(newData);
+		cout(uid + "呼叫服务！");
+		
+	});
+	socket.on('callInfo', function (data) {
+		//验证key
+		var onlykey=data.onlykey;
+		var shopId=data.shopId;
+		var uid=data.uid;			//人员
+		var id=data.id;
+		if(!onlykey || !uid || !shopId)return;
+		
+		var rst=Func.partOnlykey(onlykey);
+		if(!rst){cout("bad onlykey");return;}
+		var groupKey="group" + shopId.toString() + "d" + did.toString();
+		
+		var newData={ id:id, uid:uid, state:1  };
+		sendPerson(groupKey,uid,newData);
+	});
 
 
 
