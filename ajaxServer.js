@@ -749,10 +749,36 @@ http.createServer(function (request, response) {
      	});
         
       }
-      else if(key=="/ss"){
+      else if(key=="/search"){
+    	  var shopId=params.query.shopId;
+    	  var key=params.query.key;
+    	  if(shopId && key){
+    		  var sql="select * from dish where sid=" + shopId + "";
+	    	  getData(sql,function(txt){
+	    		  var rst=JSON.parse(txt);
+	    		  
+	    		  response.end(params.query.callback+'(' + txt + ')');
+	    		  cout("request: " + sql + " ,return: " + txt );
+	    	  });
+    	  }
+      }
+      else if(key=="/**"){
+        	
+
+      }    
+      else if(key=="/****"){
         	
 
       }
+      else if(key=="/**"){
+        	
+
+      }    
+      else if(key=="/****"){
+        	
+
+      }      
+
     //通用获取数据过程
     function getData(sql,callback){
 	   	db.Select(sql,function(err,rst,index){
