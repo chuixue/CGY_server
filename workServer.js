@@ -94,7 +94,7 @@ function Work3(data)
 	var sql="insert into callinfo (uid, onlykey, sid, cstate, cbtime) VALUES";
 	sql += Func.fStrs([uid, [onlykey], shopId, 1, "date" ]);
 	db.Query(sql,function(err,rst,index){
-		var id=rst[index].inertId;
+		var id=rst[index].insertId;
 		cout("呼叫编号: " + id);
 		data["id"]=id;
 		data["state"]=1;

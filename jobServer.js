@@ -27,7 +27,15 @@ app.post('/sql', function(req,res){
 	db.Query(req.body.sql);
 	//res.send("nimeia");
 });
+app.post('/image', function(req,res){  
+	out(req.body.name);
+	out(req.body.path);
+	out(req.body.shopId);
+	out(req.body.style);
 
+	//db.Query(req.body.sql);
+//res.send("nimeia");
+});
 
 app.listen(8006,Func.PUB_HOST);
 cout('Server running on port ' + Func.PUB_HOST + ':8006/');

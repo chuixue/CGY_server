@@ -113,7 +113,7 @@ io.sockets.on('connection', function (socket){
 			if(!U)continue;
 			if(U.uid!=uid)continue;
 			var socket=U.socket;
-			socket.emit("update",data);
+			socket.emit("callInfo",data);
 		}
 	}
 	//***************************************************************
@@ -208,7 +208,7 @@ io.sockets.on('connection', function (socket){
 		
 		var rst=Func.partOnlykey(onlykey);
 		if(!rst){cout("bad onlykey");return;}
-		var groupKey="group" + shopId.toString() + "d" + did.toString();
+		var groupKey="group" + shopId.toString() + "d" + rst.did.toString();
 		
 		var newData={ id:id, uid:uid, state:1  };
 		cout("呼叫回执:" + uid);out(newData);

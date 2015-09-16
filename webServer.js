@@ -7,14 +7,12 @@ var path = require('path');
 var url = require('url');
 var formidable = require('formidable');
 var util = require('util');
-
+var request = require('request');
 
 var Func = require('./lib/public.js'); 
 var Database=require('./lib/database.js');
 var express = require('express')
 var morgan = require('morgan')
-var fs = require('fs')
-var path = require('path')
 var multipart = require('connect-multiparty');
 
 var app = express();
@@ -26,6 +24,13 @@ app.use(express.static('./public'));
 
 app.listen(8000);
 cout('Web Server running at ' + Func.PUB_HOST + ':8000');
+
+var P_JOB=0;	//事务服务器是否就绪
+post("/hello",{msg:"cinsServer1"},function(err,rst,body){	
+	var data=JSON.parse(body);
+	if(data.rst==1){ cout(data.msg);P_JOB=1; }
+});
+
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -73,6 +78,8 @@ app.post('/upload', multipart(), function(req, res){
   var targetPath = path.dirname(__filename) + "/" + parentPath + filename;
   var name=req.body.name?req.body.name:"";
   var shopId=req.body.nameShop?req.body.nameShop:"";
+  var style=req.body.nameStyle?req.body.nameStyle:"";//2分类 或者 1菜品 或者 3tour图
+  
   parentPath += shopId;
   if(shopId!=""){
 	  if(!fs.existsSync(parentPath))fs.mkdirSync(parentPath);
@@ -83,8 +90,11 @@ app.post('/upload', multipart(), function(req, res){
   var data={
 	  url: 'http://' + req.headers.host + "/" + parentPath + filename,
 	  name:name,
-	  path:parentPath + filename
+	  path:parentPath + filename,
+	  shopId:shopId,
+	  style:style
   };
+  send("/image",data);
   
   res.json({code: 200, msg: data});
   
@@ -114,6 +124,44 @@ function getTypes(){
 	TYPES[".xml"]= "text/xml";
 	return TYPES;
 }
+
+
+//*************************************************************************
+//移交请求至事务服务器·有回调
+function post(key,data,callback)
+{
+   	request.post({
+   		url: Func.PUB_URL + ':8006' + key,
+   		headers: {
+   	    	'Content-Type': 'application/json'
+   		},
+   		body: JSON.stringify(data)
+   	},
+   	function(error, response, body){
+   		callback(error, response, body);
+   	});
+}
+//移交请求至事务服务器·无回调
+function send(key,data)
+{
+	if(P_JOB!=1){  cout("移交失败，事务服务器未就绪."); return; }
+   	var path=arguments[1]?arguments[0]:"/db";
+   	var dt=arguments[1]?arguments[1]:arguments[0];
+   	request.post({
+   		url: Func.PUB_URL + ':8006' + path,
+   		headers: {
+   	    	'Content-Type': 'application/json'
+   		},
+   		body: JSON.stringify(dt)
+   	},
+   	function(error, response, body){
+   		cout(body);
+   	});
+}
+
+
+
+
 
 
 
