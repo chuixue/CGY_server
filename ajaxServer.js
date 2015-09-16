@@ -802,9 +802,18 @@ http.createServer(function (request, response) {
     		  });
     	  }
       }    
-      else if(key=="/****"){
-        	
-
+      else if(key=="/view"){
+    	  var data=[];
+    	  var shopId=params.query.shopId;
+    	  var sql="select * from image where sid=" + shopId +" and iclass=3";
+		  getData(sql,function(txt){
+    		  var rst=JSON.parse(txt);
+    		  for(var i=0;i<rst.length;i++){
+    			  data[i]={ url:rst[i].ipath};
+    		  }
+    		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
+    		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
+		  });
       }
       else if(key=="/**"){
         	
