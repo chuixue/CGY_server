@@ -77,8 +77,9 @@ app.post('/upload', multipart(), function(req, res){
   
   var targetPath = path.dirname(__filename) + "/" + parentPath + filename;
   var name=req.body.name?req.body.name:"";
+  var user=req.body.nameUser?req.body.nameUser:"";
   var shopId=req.body.nameShop?req.body.nameShop:"";
-  var style=req.body.nameStyle?req.body.nameStyle:"";//2分类 或者 1菜品 或者 3tour图
+  var style=req.body.nameStyle?req.body.nameStyle:0;//2分类 或者 1菜品 或者 3tour图
   
   parentPath += shopId;
   if(shopId!=""){
@@ -92,7 +93,8 @@ app.post('/upload', multipart(), function(req, res){
 	  name:name,
 	  path:parentPath + filename,
 	  shopId:shopId,
-	  style:style
+	  style:style,
+	  user:user
   };
   send("/image",data);
   

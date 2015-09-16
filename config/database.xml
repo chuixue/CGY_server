@@ -234,7 +234,7 @@
     	<column cnName="备注" colName="imark" type="varchar" length="32" primary="" increment="" default="" null="" charset="" />
     	<column cnName="类型" colName="itype" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
     	<column cnName="分类" colName="iclass" type="int" length="4" primary="" increment="" default="1" null="" charset="" />    	
-    	<column cnName="操作员" colName="ipid" type="int" length="8" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="ipid" type="varchar" length="16" primary="" increment="" default="" null="" charset="" />
     	<column cnName="操作时间" colName="iptime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
     	<column cnName="商家" colName="sid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
     </table>

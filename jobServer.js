@@ -28,13 +28,17 @@ app.post('/sql', function(req,res){
 	//res.send("nimeia");
 });
 app.post('/image', function(req,res){  
-	out(req.body.name);
-	out(req.body.path);
-	out(req.body.shopId);
-	out(req.body.style);
-
-	//db.Query(req.body.sql);
-//res.send("nimeia");
+	var name=req.body.name;
+	var path=req.body.path;
+	var shopId=req.body.shopId;
+	var cls=req.body.style;
+	var pid=req.body.user;
+	
+	var sql="insert into image (ipath,iname,itype,iclass, ipid,iptime,sid) VALUES ";
+	sql+=Func.fStrs([[path], [name], 0, cls, [pid], "date", shopId]);
+	db.Query(req.body.sql);
+	
+	//res.send("nimeia");
 });
 
 app.listen(8006,Func.PUB_HOST);
