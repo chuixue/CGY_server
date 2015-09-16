@@ -468,11 +468,24 @@ http.createServer(function (request, response) {
     	var opid=query.user;    	
     	var data={};
     	if(ddescribe!=""){
-    		var sql="INSERT INTO dishclass (ddescribe, dmark, dimage, opid, optime, sid) VALUES ";
-    		sql+=Func.fStrs([[ddescribe], [dmark], [dimage], [opid], "date", shopId]);
-    		subData(sql,function(txt){
-       	 		response.end(params.query.callback+'(' + txt + ')');
-       	 		cout("sub data: " + sql + " ,return: " + txt );
+    		var sql1="select did from dishclass where sid=" + shopId + " order by did";
+    		getData(sql1,function(txt){
+    			var rst=JSON.parse(txt);
+    			var ls={};
+    			for(var i=0;i<rst.length;i++)ls[rst[i].did]=1;
+    			var index=0;
+    			while(true){
+    				var tp=Math.pow(2,index++);
+    				if(!ls[tp])break;
+        		}
+       	 		var newId=Math.pow(2,index-1);
+	       	 	var sql="INSERT INTO dishclass (did,ddescribe, dmark, dimage, opid, optime, sid) VALUES ";
+	    		sql+=Func.fStrs([newId, [ddescribe], [dmark], [dimage], [opid], "date", shopId]);
+	    		cout(sql);
+	    		subData(sql,function(txt){
+	       	 		response.end(params.query.callback+'(' + txt + ')');
+	       	 		cout("sub data: " + sql + " ,return: " + txt );
+	       	 	});
        	 	});
     	}else{
     		data["error"]=1;
