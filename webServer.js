@@ -96,11 +96,15 @@ app.post('/upload', multipart(), function(req, res){
 	  style:style,
 	  user:user
   };
-  post("/image",data, function(){
-	  cout("post");
+  post("/image",data, function(error, response, body){
+	  var data=JSON.parse(body);
+	  var id=-1;
+	  if(!data.error)id= data.id; 
+	  data["id"]=id;
+	  res.json({code: 200, msg: data});
   });
   
-  res.json({code: 200, msg: data});
+  
   
   cout(req.headers.host + "/" + parentPath + filename);
 });
@@ -134,7 +138,6 @@ function getTypes(){
 //移交请求至事务服务器·有回调
 function post(key,data,callback)
 {
-	if(P_JOB!=1){  cout("移交失败，事务服务器未就绪."); return; }
    	request.post({
    		url: Func.PUB_URL + ':8006' + key,
    		headers: {

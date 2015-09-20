@@ -37,10 +37,10 @@ app.post('/image', function(req,res){
 	var sql="insert into image (ipath,iname,itype,iclass, ipid,iptime,sid) VALUES ";
 	sql+=Func.fStrs([[path], [name], 0, cls, [pid], "date", shopId]);
 	db.Query(sql,function(err,rst,index){
-		cout("sql OK");
+		var id=rst[index].insertId;
+		res.send( { error:err, id:id} );
 	});
 	
-	//res.send("nimeia");
 });
 
 app.listen(8006,Func.PUB_HOST);
