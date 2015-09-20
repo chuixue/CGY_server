@@ -836,6 +836,7 @@ http.createServer(function (request, response) {
 	   		 else{
 	   			 var rstData=[];
 	   			 if(index==0)rstData=rst; else if(index==1)rstData=rst[1];
+	   			 
 	   			 callback(JSON.stringify(rstData));
 	   		}
 	   	});

@@ -173,12 +173,13 @@ io.sockets.on('connection', function (socket){
 		var num=data.dish.num;					//数量	
 		var mark=data.dish.mark?data.dish.mark:"";//备注	
 		var shopId=data.shopId;
+		var recommend=(data.recommend)?data.recommend:0;
 		if(!onlykey || !uid)return;
 		
 		data["car"]=1;//标明购物车消息
 		cout("shopId:" + shopId + "," + uid + " 发来点菜信息");
 		
-		var newData={ workID:1,onlykey:onlykey,did:did,uid:uid,dish:dish,num:num,mark:mark,shopId:shopId};
+		var newData={ workID:1,onlykey:onlykey,did:did,uid:uid,dish:dish,num:num,mark:mark,shopId:shopId,recommend:recommend};
 		send(newData);
 		
 		var groupKey="group" + shopId.toString() + "d" + did.toString();

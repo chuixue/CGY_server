@@ -36,7 +36,9 @@ app.post('/image', function(req,res){
 	
 	var sql="insert into image (ipath,iname,itype,iclass, ipid,iptime,sid) VALUES ";
 	sql+=Func.fStrs([[path], [name], 0, cls, [pid], "date", shopId]);
-	db.Query(sql);
+	db.Query(sql,function(err,rst,index){
+		cout("sql OK");
+	});
 	
 	//res.send("nimeia");
 });
