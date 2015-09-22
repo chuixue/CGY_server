@@ -809,7 +809,7 @@ http.createServer(function (request, response) {
 		  getData(sql,function(txt){
     		  var rst=JSON.parse(txt);
     		  for(var i=0;i<rst.length;i++){
-    			  data[i]={ url:rst[i].ipath};
+    			  data[i]={ url:rst[i].ipath, id:rst[i].iid };
     		  }
     		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
     		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
