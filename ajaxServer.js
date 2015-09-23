@@ -815,6 +815,18 @@ http.createServer(function (request, response) {
     		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
 		  });
       }
+      else if(key=="/delImg"){
+    	  var id=params.query.id;
+    	  var shopId=params.query.shopId;
+    	  var sql="delete from image where id=" + id + " and shopId=" + shopId;
+    	  subData(sql,function(txt){
+     	 		response.end(params.query.callback+'(' + txt + ')');
+     	  });
+      }    
+      else if(key=="/****"){
+        	
+
+      }      
       else if(key=="/**"){
         	
 
@@ -823,7 +835,6 @@ http.createServer(function (request, response) {
         	
 
       }      
-
     //通用获取数据过程
     function getData(sql,callback){
 	   	db.Select(sql,function(err,rst,index){

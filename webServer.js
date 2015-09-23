@@ -97,9 +97,9 @@ app.post('/upload', multipart(), function(req, res){
 	  user:user
   };
   post("/image",data, function(error, response, body){
-	  var data=JSON.parse(body);
+	  var temp=JSON.parse(body);
 	  var id=-1;
-	  if(!data.error)id= data.id; 
+	  if(!temp.error)id= temp.id; 
 	  data["id"]=id;
 	  res.json({code: 200, msg: data});
   });
