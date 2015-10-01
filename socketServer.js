@@ -193,8 +193,10 @@ io.sockets.on('connection', function (socket){
 		var onlykey=data.onlykey;
 		var shopId=data.shopId;
 		var uid=data.uid;			//人员
+		var mark=data.mark?data.mark:"";//备注
+		
 		if(!onlykey || !uid || !shopId)return;
-		var newData={ workID:3, onlykey:onlykey, uid:uid, shopId:shopId };
+		var newData={ workID:3, onlykey:onlykey, uid:uid, shopId:shopId, mark:mark };
 		send(newData);
 		cout(uid + "呼叫服务！");
 		

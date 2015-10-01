@@ -809,7 +809,7 @@ http.createServer(function (request, response) {
 		  getData(sql,function(txt){
     		  var rst=JSON.parse(txt);
     		  for(var i=0;i<rst.length;i++){
-    			  data[i]={ url:rst[i].ipath, id:rst[i].iid };
+    			  data[i]={ url:rst[i].ipath, id:rst[i].iid, state:rst[i].state};
     		  }
     		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
     		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
@@ -818,7 +818,7 @@ http.createServer(function (request, response) {
       else if(key=="/delImg"){
     	  var id=params.query.id;
     	  var shopId=params.query.shopId;
-    	  var sql="delete from image where id=" + id + " and shopId=" + shopId;
+    	  var sql="delete from image where iid=" + id + " and sid=" + shopId;
     	  subData(sql,function(txt){
      	 		response.end(params.query.callback+'(' + txt + ')');
      	  });
@@ -856,6 +856,7 @@ http.createServer(function (request, response) {
   function subData(sql,callback){
 	  db.Select(sql,function(error,result,index){
 	 	if(error){
+	 		var data={};
 	 		data["error"]=2;
 	 		data["message"]="更新数据错误";
 	 		callback(JSON.stringify(data));

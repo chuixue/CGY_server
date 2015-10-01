@@ -89,10 +89,11 @@ function Work3(data)
 	var uid=data.uid;
 	var shopId=data.shopId;
 	var onlykey=data.onlykey;
+	var mark=data.mark;
 	if(!onlykey || !uid || !shopId)return;
 	
-	var sql="insert into callinfo (uid, onlykey, sid, cstate, cbtime) VALUES";
-	sql += Func.fStrs([uid, [onlykey], shopId, 1, "date" ]);
+	var sql="insert into callinfo (uid, onlykey, sid, cstate, cbtime, cmark) VALUES";
+	sql += Func.fStrs([uid, [onlykey], shopId, 1, "date", [mark] ]);
 	db.Query(sql,function(err,rst,index){
 		var id=rst[index].insertId;
 		cout("呼叫编号: " + id);
