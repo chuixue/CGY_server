@@ -844,6 +844,7 @@ http.createServer(function (request, response) {
      	  });
       }    
       else if(key=="/msgInfo"){
+    	  var data={};
     	  var time=Func.date(); 
     	  var shopId=params.query.shopId;
     	  var uid=params.query.uid;
@@ -851,20 +852,22 @@ http.createServer(function (request, response) {
 	    	  var callTime=params.query.timeCall || time;
 	    	  var orderTime=params.query.timeOrder || time;
 	    	  var moneyTime=params.query.timeMoney || time;
-	    	  var sql1="SELECT count(*) FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"'";
-	    	  var sql2="SELECT count(*) FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' group by onlykey";
-	    	  var sql3="SELECT count(*) FROM money where sid="+ shopId +" and mtime>'"+ moneyTime +"'";
-	    	  var sql4="SELECT onlykey,uid,cbtime FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"' order by cbtime desc limit 1";
-	    	  var sql5="SELECT onlykey,uid,obtime FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' order by mtime desc limit 1";
+	    	  var sql1="SELECT count(*)as ct FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"'";
+	    	  var sql2="SELECT onlykey,uid,cbtime FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"' order by cbtime desc limit 1";	    	  
+	    	  var sql3="SELECT count(*)as ct FROM (SELECT onlykey FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' group by onlykey)as tpa";
+	    	  var sql4="SELECT onlykey,uid,obtime FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' order by obtime desc limit 1";
+	    	  var sql5="SELECT count(*)as ct FROM money where sid="+ shopId +" and mtime>'"+ moneyTime +"'";
 	    	  var sql6="SELECT mvalue,muser,mtime FROM money where sid="+ shopId +" and mtime>'"+ moneyTime +"' order by mtime desc limit 1";
-	    	  db.queryAll(sql1 + ";" + sql2,function(errs,rsts,index){
+	    	  db.queryAll(sql1 + ";" + sql2 + ";" + sql3 + ";" + sql4 + ";" + sql5 + ";" + sql6,function(errs,rsts,index){
 	    		  if(errs){
 	        		  cout(errs.message);
 	        		  data["error"]=1;
 	        		  data["message"]=errs.message;
 	    		  }else{
-	    			  data["result"]=rsts;
-	    			  out(rsts);
+	    			  var l=rsts.length-1;
+	    			  data["money"]={data:rsts[l--], count:rsts[l--][0].ct};
+	    			  data["order"]={data:rsts[l--], count:rsts[l--][0].ct};
+	    			  data["call"]={data:rsts[l--], count:rsts[l--][0].ct};
 	    		  }
 	    		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
 	    	  });//End Query
