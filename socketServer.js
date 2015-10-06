@@ -14,6 +14,7 @@ var db=new Database();
 
 var userList = {};//用户表
 var group={};//组信息
+var shoplist = {};//商户后台客户端列表
 var userKey=[];//索引信息
 var Dish={};//菜单信息
 
@@ -39,6 +40,11 @@ io.sockets.on('connection', function (socket){
 	
 	//响应客户端登陆请求
 	socket.on('login', function (data,fn) {
+		var isShop=data.isShop || 0;
+		if(isShop){
+			shoplist["shop" + data.shopId]=socket;
+			return;
+		}
 		if(!data.onlykey || !data.uid || !data.shopId)return;
 
 		var pk=Func.partOnlykey(data.onlykey);//识别标识符
@@ -200,6 +206,9 @@ io.sockets.on('connection', function (socket){
 		send(newData);
 		cout(uid + "呼叫服务！");
 		
+		//通知商家
+		var skt=shoplist["shop" + data.shopId];
+		skt.emit("shopMsg",newData);
 	});
 	socket.on('callInfo', function (data) {
 		//验证key

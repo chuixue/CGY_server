@@ -248,7 +248,19 @@
     	<column cnName="桌数" colName="cdesk" type="int" length="4" primary="1" increment="" default=100"" null="" charset="" />
     	
     </table>
-
+	<table tbName="money" cnName="付款表">
+    	<column cnName="编号" colName="mid" type="int" length="8" primary="1" increment="1" default="" null="0" charset="" />
+    	<column cnName="应付金额" colName="mvalue" type="double" length="8,2" primary="" increment="" default="0.0" null="" charset="" />
+    	<column cnName="唯一标示" colName="onlykey" type="varchar" length="16" primary="" increment="" default="" null="0" charset="" />
+    	<column cnName="类型" colName="mstyle" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+    	<column cnName="分类" colName="mtype" type="int" length="4" primary="" increment="" default="1" null="" charset="" />
+    	<column cnName="付款方" colName="muser" type="varchar" length="64" primary="1" increment="" default="" null="" charset="" />
+    	<column cnName="付款时间" colName="mtime" type="datetime" length="" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="操作员" colName="opid" type="varchar" length="16" primary="" increment="" default="" null="" charset="" />
+    	<column cnName="商家" colName="sid" type="int" length="8" primary="" increment="" default="" null="0" charset="" />
+    </table>
+    
+    
 </database>
 
 

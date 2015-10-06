@@ -17,15 +17,14 @@ var cfg=new Config();
 //cout(Func.getSearchByList("问题",["哈问5","哈问喽问题","sdadf"]));
 
 
-
-return;
+//return;
 //创建数据库
 for(var i=0;i<cfg.tbList.length;i++)
 {
 	
 	var sql=cfg.tbList[i].GetSql();
-	if(cfg.tbList[i].tbName!="callinfo")continue;
-	//db.Query(sql);
+	if(cfg.tbList[i].tbName!="money")continue;
+	db.Query(sql);
 }
 
 

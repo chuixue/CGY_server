@@ -801,7 +801,27 @@ http.createServer(function (request, response) {
 	    		  cout("request: " + sql + " ,return: " + JSON.stringify(data) );
     		  });
     	  }
-      }    
+      }
+      else if(key=="/callInfo"){
+    	  var shopId=params.query.shopId;
+    	  var uid=params.query.uid;
+    	  if(shopId && uid){
+    		  var sql="select * from callInfo where sid=" + shopId + " and cstate=1 order by cbtime desc";
+    		  getData(sql,function(txt){
+	    		  response.end(params.query.callback+'(' + txt + ')');
+	    		  cout("request: " + sql + " ,return: " + txt );
+    		  });
+    	  }
+       }
+      else if(key=="/dealCall"){
+    	var shopId=params.query.shopId;
+    	var id=params.query.id;
+    	var opid=params.query.user;
+		var sql="update callInfo set cstate="+ 3 +",opid='" + opid + "' where cid =" + id;
+		subData(sql,function(txt){
+			response.end(params.query.callback+'(' + txt + ')');
+		});
+      }
       else if(key=="/view"){
     	  var data=[];
     	  var shopId=params.query.shopId;
@@ -823,10 +843,38 @@ http.createServer(function (request, response) {
      	 		response.end(params.query.callback+'(' + txt + ')');
      	  });
       }    
+      else if(key=="/msgInfo"){
+    	  var time=Func.date(); 
+    	  var shopId=params.query.shopId;
+    	  var uid=params.query.uid;
+    	  if(shopId && uid){
+	    	  var callTime=params.query.timeCall || time;
+	    	  var orderTime=params.query.timeOrder || time;
+	    	  var moneyTime=params.query.timeMoney || time;
+	    	  var sql1="SELECT count(*) FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"'";
+	    	  var sql2="SELECT count(*) FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' group by onlykey";
+	    	  var sql3="SELECT count(*) FROM money where sid="+ shopId +" and mtime>'"+ moneyTime +"'";
+	    	  var sql4="SELECT onlykey,uid,cbtime FROM callInfo where sid="+ shopId +" and cstate=1 and cbtime>'"+ callTime +"' order by cbtime desc limit 1";
+	    	  var sql5="SELECT onlykey,uid,obtime FROM orderInfo where sid="+ shopId +" and ostate=1 and obtime>'"+ orderTime +"' order by mtime desc limit 1";
+	    	  var sql6="SELECT mvalue,muser,mtime FROM money where sid="+ shopId +" and mtime>'"+ moneyTime +"' order by mtime desc limit 1";
+	    	  db.queryAll(sql1 + ";" + sql2,function(errs,rsts,index){
+	    		  if(errs){
+	        		  cout(errs.message);
+	        		  data["error"]=1;
+	        		  data["message"]=errs.message;
+	    		  }else{
+	    			  data["result"]=rsts;
+	    			  out(rsts);
+	    		  }
+	    		  response.end(params.query.callback+'(' + JSON.stringify(data) + ')');
+	    	  });//End Query
+    	}
+
+      }
       else if(key=="/****"){
         	
 
-      }      
+      }
       else if(key=="/**"){
         	
 
