@@ -273,7 +273,7 @@ http.createServer(function (request, response) {
         		 var count=menu[i].num;
         		 var mark="";
         		 if(menu[i].mark)mark=menu[i].mark;
-        		 sql+=Func.fStrs([did, uid, [onlykey], count, isHelp, [mark], 0, "date", shopId ]);
+        		 sql+=Func.fStrs([did, uid, [onlykey], count, isHelp, [mark], 1, "date", shopId ]);
         		 //sql+="("+ did + "," + uid + "," + onlykey + "," + count + "," + isHelp + ",'" + mark + "',0,'" + Func.date() + "')";
         		 if(i!=menu.length-1)sql+=",";
         	 }
@@ -311,7 +311,7 @@ http.createServer(function (request, response) {
     	 }else{
     		 PV[onlykey]=1;
     		 var st=(params.query.type==1)?" and uid=" + uid:"";//个人？全部
-    		 var sql="select oid,did,uid,sum(ocount)as socount,ohelp,omark from carinfo where sid="+ shopId +" and onlykey='" + onlykey + "' and ostate=0" +st + " group by did";	
+    		 var sql="select oid,did,uid,sum(ocount)as socount,ohelp,omark from carinfo where sid="+ shopId +" and onlykey='" + onlykey + "' and ostate=1" +st + " group by did";	
         	 db.Select(sql,function(err,rst,index){
         	 	 if(err){
         	 		cout(err.message);
@@ -319,12 +319,12 @@ http.createServer(function (request, response) {
         	 	 }
         	 	 else{
         	 		 var rstData=[];
-        	 		 var sql1="UPDATE carinfo SET ostate = 1 WHERE sid="+ shopId +" and onlykey='" + onlykey + "' and ostate=0" +st;	
+        	 		 var sql1="UPDATE carinfo SET ostate = 2 WHERE sid="+ shopId +" and onlykey='" + onlykey + "' and ostate=1" +st;	
         	 		 var sql2="INSERT INTO orderinfo (did, uid, onlykey, ocount, ohelp, omark, ostate, obtime, sid) VALUES ";
         	 		 if(index==0)rstData=rst; else if(index==1)rstData=rst[1];
         	 		 for(var i=0;i<rstData.length;i++){
         	 			 var mark=rstData[i].mark?rstData[i].mark:"";
-        	 			 sql2+=Func.fStrs([rstData[i].did, rstData[i].uid, [onlykey], rstData[i].socount, rstData[i].ohelp, [mark],0, "date", shopId ]);   	 
+        	 			 sql2+=Func.fStrs([rstData[i].did, rstData[i].uid, [onlykey], rstData[i].socount, rstData[i].ohelp, [mark],1, "date", shopId ]);   	 
         	 			 //sql2+="("+ rstData[i].did + "," + rstData[i].uid + "," + onlykey + "," + 
 						//		rstData[i].ocount + ","+ rstData[i].ohelp + ",'" + mark + "',0,'" + Func.date() + "')";
 						if(i!=rstData.length-1)sql2+=",";
@@ -496,7 +496,7 @@ http.createServer(function (request, response) {
     else if(key=="/orderList"){
     	var RST={};
     	var shopId=params.query.shopId;//join worker on dish.wid=worker.wid 
-   	 	var sql="select * from orderinfo join dish on orderinfo.did=dish.did where orderinfo.ostate=0 and orderinfo.sid=" + shopId;
+   	 	var sql="select * from orderinfo join dish on orderinfo.did=dish.did where orderinfo.ostate=1 and orderinfo.sid=" + shopId;
    	 	getData(sql,function(txt){
    	 		response.end(params.query.callback+'(' + txt + ')');
 	 		cout("get data: " + sql + " ,return: " + txt );
@@ -549,7 +549,7 @@ http.createServer(function (request, response) {
 		   	 			if(i!=tp.length-1)tpTxt2+= ",";
 		   	 		}//End For
 		   	 		tpTxt2+=")";
-		   	 		var sql1="update orderinfo set omoney=1,oprice=case oid " + tpTxt1 + "end where sid=" + shopId + " and oid in" + tpTxt2;
+		   	 		var sql1="update orderinfo set omoney=1,ostate=4,oprice=case oid " + tpTxt1 + "end where sid=" + shopId + " and oid in" + tpTxt2;
 		   	 		var tid=-1;
 		   	 		if(onlykey.substr(0,1)!="9")tid=Func.partOnlykey(onlykey).did;
 		   	 		var pstate=rst.length==tp.length?3:2;
