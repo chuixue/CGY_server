@@ -52,7 +52,7 @@ function Work1(data)
 			if(index==0)rstData=result; else if(index==1)rstData=result[1];
 			if(rstData.length!=0)help=1;
 			sql="INSERT INTO carinfo (did, uid, onlykey, ocount, ohelp, omark, ostate, obtime,sid, orecommend) VALUES ";
-			sql+=Func.fStrs([dish, uid, [onlykey], num, help, [mark], 0, "date", shopId, recommend]);
+			sql+=Func.fStrs([dish, uid, [onlykey], num, help, [mark], 1, "date", shopId, recommend]);
 			//sql+="("+ dish + "," + uid + ",'" + onlykey + "'," + num + ","+ help + ",'" + mark + 
 			//		"',0,'" + Func.date() + "',"+ shopId +",)";
 			db.Query(sql,function(err,rst){});

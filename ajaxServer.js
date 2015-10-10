@@ -360,7 +360,7 @@ http.createServer(function (request, response) {
     	var uid=params.query.uid;
     	var shopId=params.query.shopId;
     	var st=(params.query.type==1)?" and uid=" + uid:"";//个人？全部
-    	var sql="select * from orderinfo where sid="+ shopId +" and onlykey='" + onlykey + "'" + st;
+    	var sql="select * from orderinfo where sid="+ shopId +" and onlykey='" + onlykey + "' and ostate>0" + st;
     	getData(sql,function(txt){
     		response.end(params.query.callback+'(' + txt + ')');
     	 	cout("request: " + sql + " ,return: " + txt );
@@ -372,7 +372,7 @@ http.createServer(function (request, response) {
     	var uid=params.query.uid;
     	var shopId=params.query.shopId;
     	var st=(params.query.type==1)?" and uid=" + uid:"";//个人？全部
-    	var sql="select * from carinfo where sid="+ shopId +" and onlykey='" + onlykey + "'" + st;
+    	var sql="select * from carinfo where sid="+ shopId +" and onlykey='" + onlykey + "' and " + st;
     	getData(sql,function(txt){
     		response.end(params.query.callback+'(' + txt + ')');
     		cout("request: " + sql + " ,return: " + txt );
