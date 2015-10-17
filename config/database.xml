@@ -5,6 +5,7 @@
         <dbuser>root</dbuser>
         <dbpasswd>cins_b511</dbpasswd>
         <dbname>caigengyao</dbname>
+        <dbport>6033</dbport>
     </mysql>
     
     <table tbName="user" cnName="客户表">
